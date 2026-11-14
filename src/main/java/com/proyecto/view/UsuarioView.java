@@ -66,6 +66,9 @@ public class UsuarioView extends JFrame {
         btnEliminar = new JButton("Eliminar");
         btnLimpiar = new JButton("Limpiar");
 
+        // Evento con cuadro de advertencia antes de borrar los campos
+        btnLimpiar.addActionListener(e -> confirmarYLimpiarCampos());
+
         panelBotones.add(btnGuardar);
         panelBotones.add(btnActualizar);
         panelBotones.add(btnEliminar);
@@ -85,5 +88,30 @@ public class UsuarioView extends JFrame {
         JScrollPane scrollPane = new JScrollPane(tablaUsuarios);
         scrollPane.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
         add(scrollPane, BorderLayout.CENTER);
+    }
+
+    public void confirmarYLimpiarCampos() {
+        int respuesta = JOptionPane.showConfirmDialog(
+                this,
+                "¡Cuidado! Se van a borrar todos los campos del formulario.\n¿Deseas continuar?",
+                "Advertencia - Limpiar Campos",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE
+        );
+
+        if (respuesta == JOptionPane.YES_OPTION) {
+            limpiarCampos();
+        }
+    }
+
+    public void limpiarCampos() {
+        txtId.setText("");
+        txtNombre.setText("");
+        txtCorreo.setText("");
+        cbRol.setSelectedIndex(0);
+        if (tablaUsuarios != null) {
+            tablaUsuarios.clearSelection();
+        }
+        txtNombre.requestFocus();
     }
 }
